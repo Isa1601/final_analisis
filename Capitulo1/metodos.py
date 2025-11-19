@@ -105,17 +105,26 @@ def raices_multiples(fx_str, dfx_str, ddfx_str, x0, tol, niter):
             return {"error": f"Derivada cero en iteración {iteracion+1}. Verifica f'(x)."}
 
         x1 = x0 - (f / df)  # m = 1 en este caso
-        err = abs(x1 - x0)
+        err = abs(x1 - x0) #Error absoluto
 
+        err1 = abs((x1-x0)/x1) #Error relativo 1
+
+        err2 = abs((x1-x0)/x0) #Error relativo 2
+        
+        err3 = abs(dfx_str)
+        
         resultados.append({
             "iter": iteracion + 1,
             "x0": x0,
             "x1": x1,
-            "error": err
+            "error abs": err
+            "error rel1": err1
+            "error rel2": err2
+            "error con": err3
         })
 
         if abs(f) < tol or err < tol:
             return {"resultados": resultados, "raiz": x1}
         x0 = x1
 
-    return {"resultados": resultados, "error": "No converge dentro del número de iteraciones. Verifica derivadas y valor inicial."}
+    return {"resultados": resultados, "error abs": "No converge dentro del número de iteraciones. Verifica derivadas y valor inicial."}
